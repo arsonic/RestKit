@@ -380,6 +380,7 @@
     }
 
     RKLogDebug(@"Finished performing object mapping. Results: %@", results);
+    NSLog(@"Finished performing object mapping. Results: %@", results);
 
     return [RKObjectMappingResult mappingResultWithDictionary:results];
 }

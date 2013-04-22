@@ -154,6 +154,7 @@ typedef enum {
 ///-----------------------------------------------------------------------------
 typedef void(^RKRequestDidLoadResponseBlock)(RKResponse *response);
 typedef void(^RKRequestDidFailLoadWithErrorBlock)(NSError *error);
+typedef void(^RKRequestDidDidSendDataBlock)(NSInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite);
 
 /**
  Models the request portion of an HTTP request/response cycle.
@@ -167,6 +168,7 @@ typedef void(^RKRequestDidFailLoadWithErrorBlock)(NSError *error);
 
     RKRequestDidLoadResponseBlock _onDidLoadResponse;
     RKRequestDidFailLoadWithErrorBlock _onDidFailLoadWithError;
+    RKRequestDidDidSendDataBlock _onDidSendData;
 }
 
 ///-----------------------------------------------------------------------------
@@ -359,6 +361,12 @@ typedef void(^RKRequestDidFailLoadWithErrorBlock)(NSError *error);
  @default YES
  */
 @property (nonatomic, assign) BOOL followRedirect;
+
+/**
+ A block to invoke when the client didSend a batch of bytes to the receiver.
+ 
+ */
+@property (nonatomic, copy) RKRequestDidDidSendDataBlock onDidSendData;
 
 #if TARGET_OS_IPHONE
 ///-----------------------------------------------------------------------------

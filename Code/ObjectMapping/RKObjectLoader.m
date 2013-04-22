@@ -57,6 +57,7 @@
 @synthesize onDidLoadObject = _onDidLoadObject;
 @synthesize onDidLoadObjects = _onDidLoadObjects;
 @synthesize onDidLoadObjectsDictionary = _onDidLoadObjectsDictionary;
+@synthesize onWillMapDataBlock = _onWillMapDataBlock;
 @dynamic loaded;
 @dynamic loading;
 @dynamic response;
@@ -101,6 +102,8 @@
     _onDidLoadObjects = nil;
     [_onDidLoadObjectsDictionary release];
     _onDidLoadObjectsDictionary = nil;
+    [_onWillMapDataBlock release];
+    _onWillMapDataBlock = nil;
 
     [super dealloc];
 }
@@ -114,7 +117,9 @@
 
 - (void)informDelegateOfError:(NSError *)error
 {
-    [(NSObject<RKObjectLoaderDelegate>*)_delegate objectLoader:self didFailWithError:error];
+    if([_delegate respondsToSelector:@selector(objectLoader:didFailWithError:)]) {
+        [(NSObject<RKObjectLoaderDelegate>*)_delegate objectLoader:self didFailWithError:error];
+    }
 
     if (self.onDidFailWithError) {
         self.onDidFailWithError(error);
@@ -218,6 +223,10 @@
     if ([self.delegate respondsToSelector:@selector(objectLoader:willMapData:)]) {
         parsedData = [[parsedData mutableCopy] autorelease];
         [(NSObject<RKObjectLoaderDelegate>*)self.delegate objectLoader:self willMapData:&parsedData];
+    }
+    if(self.onWillMapDataBlock){
+        parsedData = [[parsedData mutableCopy] autorelease];
+        parsedData = self.onWillMapDataBlock(parsedData);
     }
 
     RKObjectMapper *mapper = [RKObjectMapper mapperWithObject:parsedData mappingProvider:mappingProvider];

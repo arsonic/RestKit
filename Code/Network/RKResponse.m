@@ -258,6 +258,12 @@ return __VA_ARGS__;                                                             
     RKResponseIgnoreDelegateIfCancelled();
     [_request invalidateTimeoutTimer];
 
+
+    if(_request.onDidSendData){
+        
+        _request.onDidSendData(bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
+    }
+    
     if ([[_request delegate] respondsToSelector:@selector(request:didSendBodyData:totalBytesWritten:totalBytesExpectedToWrite:)]) {
         [[_request delegate] request:_request didSendBodyData:bytesWritten totalBytesWritten:totalBytesWritten totalBytesExpectedToWrite:totalBytesExpectedToWrite];
     }

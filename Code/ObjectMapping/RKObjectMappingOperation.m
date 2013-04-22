@@ -370,11 +370,14 @@ BOOL RKObjectIsValueEqualToValue(id sourceValue, id destinationValue) {
     BOOL appliedMappings = (_nestedAttributeSubstitution != nil);
 
     if (!self.objectMapping.performKeyValueValidation) {
+        
         RKLogDebug(@"Key-value validation is disabled for mapping, skipping...");
     }
 
     for (RKObjectAttributeMapping *attributeMapping in [self attributeMappings]) {
+        
         if ([attributeMapping isMappingForKeyOfNestedDictionary]) {
+            
             RKLogTrace(@"Skipping attribute mapping for special keyPath '%@'", attributeMapping.sourceKeyPath);
             continue;
         }
@@ -478,7 +481,7 @@ BOOL RKObjectIsValueEqualToValue(id sourceValue, id destinationValue) {
 
             @throw;
         }
-
+        
         if (value == nil || value == [NSNull null] || [value isEqual:[NSNull null]]) {
             RKLogDebug(@"Did not find mappable relationship value keyPath '%@'", relationshipMapping.sourceKeyPath);
 
@@ -572,8 +575,9 @@ BOOL RKObjectIsValueEqualToValue(id sourceValue, id destinationValue) {
                     RKLogTrace(@"Found a managedObject collection. About to apply value via mutable[Set|Array]ValueForKey");
                     if ([destinationObject isKindOfClass:[NSSet class]]) {
                         RKLogTrace(@"Mapped NSSet relationship object from keyPath '%@' to '%@'. Value: %@", relationshipMapping.sourceKeyPath, relationshipMapping.destinationKeyPath, destinationObject);
-                        NSMutableSet *destinationSet = [self.destinationObject mutableSetValueForKey:relationshipMapping.destinationKeyPath];
-                        [destinationSet setSet:destinationObject];
+                        //NSMutableSet *destinationSet = [self.destinationObject mutableSetValueForKey:relationshipMapping.destinationKeyPath];
+                        //[destinationSet setSet:destinationObject];
+                        [self.destinationObject setValue:destinationObject forKey:relationshipMapping.destinationKeyPath];
                     } else if ([destinationObject isKindOfClass:[NSArray class]]) {
                         RKLogTrace(@"Mapped NSArray relationship object from keyPath '%@' to '%@'. Value: %@", relationshipMapping.sourceKeyPath, relationshipMapping.destinationKeyPath, destinationObject);
                         NSMutableArray *destinationArray = [self.destinationObject mutableArrayValueForKey:relationshipMapping.destinationKeyPath];

@@ -140,6 +140,8 @@ relationship. Relationships are processed using an object mapping as well.
  */
 @property (nonatomic, retain) NSFormatter *preferredDateFormatter;
 
+@property (nonatomic, assign) BOOL shouldSerilializeDatesToUnixTimestamps;
+
 #pragma mark - Mapping Instantiation
 
 /**

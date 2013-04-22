@@ -309,6 +309,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
     [self validateIntrospection];
     BOOL reachable = (RKReachabilityNotReachable != [self networkStatus]);
     RKLogDebug(@"Reachability observer %@ determined isNetworkReachable = %d", self, reachable);
+
     return reachable;
 }
 
@@ -330,6 +331,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 - (BOOL)isReachableViaWiFi
 {
     [self validateIntrospection];
+
     return self.networkStatus == RKReachabilityReachableViaWiFi;
 }
 

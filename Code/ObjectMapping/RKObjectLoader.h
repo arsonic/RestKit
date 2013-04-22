@@ -28,6 +28,7 @@
 
 // Block Types
 typedef void(^RKObjectLoaderBlock)(RKObjectLoader *loader);
+typedef id  (^RKObjectLoaderWillMapDataBlock)(id data);
 typedef void(^RKObjectLoaderDidFailWithErrorBlock)(NSError *error);
 typedef void(^RKObjectLoaderDidLoadObjectsBlock)(NSArray *objects);
 typedef void(^RKObjectLoaderDidLoadObjectBlock)(id object);
@@ -181,6 +182,11 @@ typedef void(^RKObjectLoaderDidLoadObjectsDictionaryBlock)(NSDictionary *diction
  @see RKObjectMappingResult
  */
 @property (nonatomic, copy) RKObjectLoaderDidLoadObjectsDictionaryBlock onDidLoadObjectsDictionary;
+
+/**
+ Arsonic's addition (same logic as with the rest of the blocks)
+ */
+@property (nonatomic, copy) RKObjectLoaderWillMapDataBlock onWillMapDataBlock;
 
 /**
  * The object mapping to use when processing the response. If this is nil,

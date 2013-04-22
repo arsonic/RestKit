@@ -38,6 +38,7 @@ NSString * const RKObjectMappingNestingAttributeKeyName = @"<RK_NESTING_ATTRIBUT
 @synthesize setNilForMissingRelationships = _setNilForMissingRelationships;
 @synthesize performKeyValueValidation = _performKeyValueValidation;
 @synthesize ignoreUnknownKeyPaths = _ignoreUnknownKeyPaths;
+@synthesize shouldSerilializeDatesToUnixTimestamps = _shouldSerilializeDatesToUnixTimestamps;
 
 + (id)mappingForClass:(Class)objectClass
 {
@@ -307,6 +308,7 @@ NSString * const RKObjectMappingNestingAttributeKeyName = @"<RK_NESTING_ATTRIBUT
     for (RKObjectAttributeMapping *attributeMapping in self.attributeMappings) {
         [inverseMapping mapKeyPath:attributeMapping.destinationKeyPath toAttribute:attributeMapping.sourceKeyPath];
     }
+    inverseMapping.shouldSerilializeDatesToUnixTimestamps = self.shouldSerilializeDatesToUnixTimestamps;
 
     for (RKObjectRelationshipMapping *relationshipMapping in self.relationshipMappings) {
         if (relationshipMapping.reversible) {

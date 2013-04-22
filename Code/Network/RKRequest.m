@@ -121,6 +121,7 @@ RKRequestMethod RKRequestMethodTypeFromName(NSString *methodName) {
 @synthesize configurationDelegate = _configurationDelegate;
 @synthesize onDidLoadResponse;
 @synthesize onDidFailLoadWithError;
+@synthesize onDidSendData;
 @synthesize additionalRootCertificates = _additionalRootCertificates;
 @synthesize disableCertificateValidation = _disableCertificateValidation;
 @synthesize followRedirect = _followRedirect;
@@ -213,6 +214,7 @@ RKRequestMethod RKRequestMethodTypeFromName(NSString *methodName) {
     self.delegate = nil;
     if (_onDidLoadResponse) Block_release(_onDidLoadResponse);
     if (_onDidFailLoadWithError) Block_release(_onDidFailLoadWithError);
+    if (_onDidSendData) Block_release(_onDidSendData);
 
     _delegate = nil;
     _configurationDelegate = nil;
@@ -253,6 +255,8 @@ RKRequestMethod RKRequestMethodTypeFromName(NSString *methodName) {
     _OAuth2RefreshToken = nil;
     [onDidFailLoadWithError release];
     onDidFailLoadWithError = nil;
+    [onDidSendData release];
+    onDidSendData = nil;
     [onDidLoadResponse release];
     onDidLoadResponse = nil;
     [self invalidateTimeoutTimer];
@@ -387,7 +391,7 @@ RKRequestMethod RKRequestMethodTypeFromName(NSString *methodName) {
 - (BOOL)prepareURLRequest
 {
     [_URLRequest setHTTPMethod:[self HTTPMethod]];
-
+    
     if ([self.delegate respondsToSelector:@selector(requestWillPrepareForSend:)]) {
         [self.delegate requestWillPrepareForSend:self];
     }
