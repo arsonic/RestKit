@@ -22,8 +22,6 @@
 #import "NSString+RKAdditions.h"
 #import "RKFixCategoryBug.h"
 
-RK_FIX_CATEGORY_BUG(NSDictionary_RKAdditions)
-
 @implementation NSDictionary (RKAdditions)
 
 + (id)dictionaryWithKeysAndObjects:(id)firstKey, ...
