@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
 
   ### Preferred dependencies
 
-  s.preferred_dependency = 'JSON'
+  s.default_subspec = 'JSON'
 
   s.subspec 'JSON' do |js|
     js.dependency 'RestKit/Network'
